@@ -1,21 +1,158 @@
+/* Add this to your globals.css file */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Global styles */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", sans-serif;
+
+  color: #333;
+  /* line-height: 1.75; */
+}
+
+/* Customizing typography */
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 1.5rem;
+  margin-bottom: 1.2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h4 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #333;
+  margin-top: 1.5rem;
+  margin-bottom: 1.2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: #333;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Container styles */
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px;
+}
+
+/* Styling for links */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Custom Card for Image */
+.card-image {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.card-body {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.card-body h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.card-body h4 {
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+
+/* Apply a custom spacing for the whole page */
+body {
+  background-color: ;
+}
+
+p {
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  margin-top: 2rem;
+}
+
+/* Article styles */
+.article-content {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+img {
+  width: 50%; /* Adjust the width to 75% */
+  height: auto; /* Automatic height to maintain aspect ratio */
+  border-radius: 1rem; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  margin-top: 1.5rem; /* Margin from the top */
+  margin-bottom: 1.5rem; /* Margin from the bottom */
+  margin-left: auto;
+  margin-right: auto;
 }
