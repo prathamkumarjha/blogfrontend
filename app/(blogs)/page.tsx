@@ -20,7 +20,7 @@ export interface BlogPost {
   updated_at: string;
   author: user;
   is_deleted: boolean;
-  likes_count: number;
+  claps: number;
   thumbnail: string;
   summary: string;
   // user: user;
@@ -93,12 +93,16 @@ export default function Home() {
             onClick={() => onClick(post.id)}
           >
             <div>
-              <div className="text-lg font-semibold">{post.author.name}</div>
+              <div className="text-lg font-semibold">
+                <span className="text-gray-500">Written by</span>
+                {post.author.name}
+              </div>
             </div>
 
             <div className="flex  justify-between">
               <div>
                 <h2>{post.title}</h2>
+                <h4 className="text-gray-500 mt-0 pt-0">{post.summary}</h4>
               </div>
               <div className="flex justify-between space-x-4">
                 {/* <h2 className="text-lg font-semibold">{post.title}</h2> */}
@@ -111,11 +115,11 @@ export default function Home() {
                 />
               </div>
             </div>
-            {/* <h3>{post.content}</h3> */}
+
             <div className="text-gray-600 flex space-x-4">
               <div className="flex">
                 <FaHandsClapping className="mr-2" />
-                {post.likes_count}
+                {post.claps}
               </div>
               <div>{formatDate(post.created_at)}</div>
             </div>

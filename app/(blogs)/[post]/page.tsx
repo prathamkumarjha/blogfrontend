@@ -1,20 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BlogPost } from "../page"; // Ensure BlogPost is typed correctly
+import { BlogPost } from "../page";
 import Head from "next/head";
 import Image from "next/image";
 import { FaUser } from "react-icons/fa";
 import { FaHandsClapping } from "react-icons/fa6";
+import { RotatingLines } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
-import { RotatingLines } from "react-loader-spinner"; // Correct import if necessary
-
+import axiosInstance from "@/lib/axiosinstance";
 export default function Home({ params }: { params: { post: number } }) {
   const [blogData, setBlogData] = useState<BlogPost | null>(null);
-  const [error, setError] = useState<string | null>(null); // Store error message as string
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-
-  // Format the date to a more readable format
   function formatDate(dateString: string): string {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
@@ -25,7 +23,6 @@ export default function Home({ params }: { params: { post: number } }) {
     return date.toLocaleDateString("en-GB", options);
   }
 
-  // Fetch blog data using the post id
   useEffect(() => {
     async function fetchBlogData() {
       try {
@@ -33,8 +30,9 @@ export default function Home({ params }: { params: { post: number } }) {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/web/posts/${params.post}/`
         );
         setBlogData(response.data);
-      } catch (error: any) {
+      } catch (error) {
         console.error("Error fetching blog data:", error);
+        //@ts-expect-error unknown type of error
         setError(error.message || "Error fetching blog data.");
       }
     }
@@ -42,7 +40,7 @@ export default function Home({ params }: { params: { post: number } }) {
     fetchBlogData();
   }, [params]);
 
-  if (error) return <div>Error loading blog data: {error}</div>; // Show the actual error message
+  if (error) return <div>Error loading blog data: {error}</div>;
 
   if (!blogData)
     return (
@@ -64,16 +62,24 @@ export default function Home({ params }: { params: { post: number } }) {
 
   const clap = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/web/posts/reactions`,
-        { blogpost_id: blogData.id }
+      const response = await axiosInstance.patch(
+        `/api/web/posts/${blogData.id}/increaseClaps/`,
+        {}
       );
-      setBlogData(response.data);
+
+      console.log("Claps increased successfully:", response.data);
     } catch (error) {
-      console.error("Error fetching blog data:", error);
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Error with Axios request:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Error:", error);
+      }
     } finally {
+      console.log("Clapped");
       router.refresh();
-      console.log("clapped");
     }
   };
 
@@ -95,7 +101,7 @@ export default function Home({ params }: { params: { post: number } }) {
           </div>
           <div className="text-md">
             <div className="font-semibold text-gray-900">
-              {blogData.author.name}
+              {blogData.author?.name}
             </div>
             <div className="text-gray-500">
               {formatDate(blogData.created_at)}
@@ -110,7 +116,7 @@ export default function Home({ params }: { params: { post: number } }) {
           }}
         >
           <FaHandsClapping className="mr-2 text-gray-500 hover:text-black cursor-pointer" />
-          <div>{blogData.likes_count}</div>
+          <div>{blogData.claps}</div>
         </div>
         <div className="w-full border-t border-gray-400">
           <div>
